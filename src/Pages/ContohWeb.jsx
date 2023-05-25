@@ -44,12 +44,27 @@ for (let i = 0; i <= 4000; i += 50) {
     const arr = data_new[i];
     arr.push(ans.clusters[i])
     data_cluster.push(arr);
-    // data_cluster.push([data_new[i].push(ans.clusters[i])]);
   } 
 
+  // sorting data dari yang terkecil
   const sortedData = data_cluster.sort((a, b) => a[a.length - 1] - b[b.length - 1]);
-  console.log(sortedData);
+  // console.log(sortedData, ini data urutan);
 
+  const groupedData = {};
+
+  sortedData.forEach(subarray => {
+    const lastValue = subarray[subarray.length - 1];
+    if (groupedData[lastValue]) {
+      groupedData[lastValue].push(subarray);
+    } else {
+      groupedData[lastValue] = [subarray];
+    }
+  });
+  
+  // console.log(groupedData);
+  const mergedData = Object.values(groupedData).reduce((acc, curr) => acc.concat(curr), []);
+
+  console.log(mergedData);
 
  
 

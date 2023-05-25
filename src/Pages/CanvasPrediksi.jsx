@@ -3,6 +3,9 @@ import h337 from "heatmap.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/canvas.css"
 import Homepage from "./Web/Homepage";
+// import heatmap from 'heatmap.js';
+import { kmeans } from 'ml-kmeans';
+
 
 export default function Headmap() {
   const heatmapRef = useRef(null);
@@ -69,7 +72,36 @@ export default function Headmap() {
       data: points,
     };
 
+     const heatmapInstance2 = h337.create({
+      container: heatmapRef.current,
+      radius: 20,
+      gradient: {
+        0: 'black',
+        0.5: 'black',
+        1: 'black',
+      },
+    });
+
+    const data2 = {
+      max: 1,
+      data: [
+        { x: 105, y: 15, value: 0.8 },
+        { x: 225, y: 255, value: 0.3 },
+        { x: 152, y: 145, value: 0.8 },
+        { x: 215, y: 254, value: 0.3 },
+        { x: 145, y: 151, value: 0.8 },
+        { x: 256, y: 251, value: 0.3 },
+        { x: 158, y: 154, value: 0.8 },
+        { x: 253, y: 245, value: 0.3 },
+      ],
+    };
+      const data_new = [];
+
+
+
+
     heatmapInstance.setData(data);
+    heatmapInstance2.setData(data);
   }, [datas]);
 
 
