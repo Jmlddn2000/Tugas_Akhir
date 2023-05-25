@@ -9,6 +9,7 @@ import Taks_4 from './Pages/Taks_4';
 import OtherWeb from './Pages/OtherWeb';
 import OtherHeatmap from './Pages/OtherHeatmap';
 import ContohWeb from './Pages/ContohWeb'
+import CanvasPrediksi from './Pages/CanvasPrediksi';
 function App() {
 
   return (
@@ -24,6 +25,8 @@ function App() {
           <Route path="/Headmap"  element={<Headmap />}/>
           <Route path="/OtherWeb"  element={<OtherWeb />}/>
           <Route path="/OtherHeatmap"  element={<OtherHeatmap />}/>
+          <Route path="/CanvasPrediksi"  element={<CanvasPrediksi />}/>
+
 
 
 
