@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { kmeans } from 'ml-kmeans';
+import Headmap from './Headmap';
+import { useEffect } from 'react';
 
 function CMeansClustering() {
   const [data, setData] = useState([
@@ -46,39 +48,45 @@ for (let i = 0; i <= 4000; i += 50) {
     data_cluster.push(arr);
   } 
 
-  // sorting data dari yang terkecil
   const sortedData = data_cluster.sort((a, b) => a[a.length - 1] - b[b.length - 1]);
-  // console.log(sortedData, ini data urutan);
 
-  const groupedData = {};
-
-  sortedData.forEach(subarray => {
-    const lastValue = subarray[subarray.length - 1];
+  let groupedData = {};
+  for (let i = 0; i < sortedData.length; i++) {
+    let lastValue = sortedData[i][sortedData[i].length - 1];
     if (groupedData[lastValue]) {
-      groupedData[lastValue].push(subarray);
+      groupedData[lastValue].push(sortedData[i]);
     } else {
-      groupedData[lastValue] = [subarray];
+      groupedData[lastValue] = [sortedData[i]];
     }
-  });
+  }
   
-  // console.log(groupedData);
-  const mergedData = Object.values(groupedData).reduce((acc, curr) => acc.concat(curr), []);
+  console.log(groupedData);
 
-  console.log(mergedData);
+  const newData = [];
+
+  for(let x = 0; x < ans.clusters.length; x++) { 
+    const arr = {
+      x : sortedData[x][0],
+      y : sortedData[x][1]
+    }
+    newData.push(arr);
+  }
+
+  // useEffect(() => {
+  //   setHasil(newData)
+  // },[newData])
+  // console.log(newData);
+
+
 
  
 
   return (
     <div>
-      <h1>K means</h1>
-      {/* <div>
-        {hasil.map((index, data) => <>
-        <div>
-          {index} : {data}
-        </div>
-        
-        </> )}
-      </div> */}
+      {/* <h1>bisa</h1> */}
+      <Headmap 
+      hasil = {hasil}
+      />
     </div>
   );
 }
