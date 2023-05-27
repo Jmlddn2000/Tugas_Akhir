@@ -6,13 +6,15 @@ import Swal from 'sweetalert2';
 import Homepage from './Web/Homepage';
 import ContohWeb from './ContohWeb';
 
-export default function Taks_4( ) {
+export default function Taks_3( ) {
 
   const [data, setData] = useState([])
   const [koordinat, setKoordinat] = useState([])
   const [status, setStatus] = useState("false")
   
   const canvasRef = useRef(null)
+  const webgazerContainerRef = useRef(null);
+
 
 
   useEffect(() => {
@@ -29,33 +31,33 @@ export default function Taks_4( ) {
   },[])
 
   
-  useEffect(()=>{
-    window.addEventListener( 'resize', () => {
-      // canvasRef.current.height = document.documentElement.scrollHeight - window.innerHeight;
-      canvasRef.current.height = window.innerHeight;
-      canvasRef.current.width = window.innerWidth;
-    })
-    // const body = document.querySelector('body');
-    
-    // canvasRef.current.heig
- 
-    // console.log(window)
-    // console.log(canvasRef.current.height)
-
-  },[])
   useEffect(() => {
-    const canvas = canvasRef.current
-    const context = canvas.getContext('2d')
-    // canvas.height = document.documentElement.scrollHeight - window.innerHeight;
-    // canvasRef.current.height = window.innerHeight;
+    const setWebgazerContainerHeight = () => {
+      // Set container height for Webgazer
+      webgazerContainerRef.current.style.height = `${document.documentElement.scrollHeight}px`;
+      console.log(webgazerContainerRef.current.style.height)
+    };
 
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    // set canvas height to window innerHeight
-    console.log(canvas.height, "tinggi")
-    //Our first draw
-    context.fillStyle = ('green')
-    context.fillRect(0, 0, canvas.width, canvas.height)
-  }, [])
+    setWebgazerContainerHeight();
+
+    // Add event listener to update the container height when the window is resized
+    window.addEventListener('resize', setWebgazerContainerHeight);
+
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      window.removeEventListener('resize', setWebgazerContainerHeight);
+    };
+  }, []);
+
+   useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    canvas.height = document.documentElement.scrollHeight;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    context.fillStyle = 'green';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }, []);
 
   useEffect(() => {
     // Menambahkan event listener untuk mendengarkan tombol yang ditekan
@@ -338,8 +340,6 @@ export default function Taks_4( ) {
 
       //start the webgazer tracker
       webgazer.setRegression('ridge') /* currently must set regression and tracker */
-          //.setTracker('clmtrackr')
-
           .setGazeListener(function(data, elapsedTime) {
               if (data == null) {
                   return;
@@ -347,9 +347,11 @@ export default function Taks_4( ) {
               var xprediction = data.x; //these x coordinates are relative to the viewport
               var yprediction = data.y; //these y coordinates are relative to the viewport
 
+              var ypredictionRelative = yprediction + window.pageYOffset;
+
               var obj_data = {
                 x: xprediction,
-                y: yprediction
+                y: ypredictionRelative
               }
 
               obj.push(obj_data)
@@ -363,8 +365,6 @@ export default function Taks_4( ) {
           webgazer.showVideoPreview(true) /* shows all video previews */
               .showPredictionPoints(true) /* shows a square every 100 milliseconds where current prediction is */
               .applyKalmanFilter(true); /* Kalman Filter defaults to on. Can be toggled by user. */
-
-  
   };
   
   // Set to true if you want to save the data even if you reload the page.
@@ -395,7 +395,7 @@ export default function Taks_4( ) {
 
   return (
 
-      <div>
+      <div ref={webgazerContainerRef}>
         {/* <p>
                   <a onClick={Restart}  href="#">Recalibrate</a>
         </p> */}

@@ -18,12 +18,12 @@ function App() {
     <BrowserRouter>
 
         <Routes>
-          <Route path="/"  element={<HeatmapDeviasion />}/>
+          <Route path="/"  element={<Home />}/>
           <Route path="/Taks_1"  element={<Taks_1 />}/>
           <Route path="/Taks_2"  element={<Taks_2 />}/>
           <Route path="/Taks_3"  element={<Taks_3 />}/>
           <Route path="/Taks_4"  element={<Taks_4 />}/>
-          <Route path="/Headmap"  element={<Headmap />}/>
+          <Route path="/Headmap"  element={<HeatmapDeviasion />}/>
           <Route path="/OtherWeb"  element={<OtherWeb />}/>
           <Route path="/OtherHeatmap"  element={<OtherHeatmap />}/>
           <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/>

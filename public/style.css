@@ -97,16 +97,19 @@ li {
 /* Calibration point position */
 #Pt1{
     top: 70px;
-    left:340px;
+    left:2vw;
+    z-index: 999;
 }
 #Pt2{
     top: 70px;
     left:50vw;
     margin-left: 340;
+    z-index: 999;
 }
 #Pt3{
     top: 70px;
     right:2vw;
+    z-index: 999;
 }
 #Pt4{
     top:50vh;
