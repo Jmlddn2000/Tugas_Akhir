@@ -297,7 +297,7 @@ export default function Taks_1( ) {
     * Sets store_points to true, so all the occuring prediction
     * points are stored
     */
-    const webgazer = window.webgazer
+    // const webgazer = window.webgazer
     function store_points_variable(){
       webgazer.params.storingPoints = true;
     }
@@ -334,14 +334,12 @@ export default function Taks_1( ) {
       console.log(obj)
     }
 
-
+    const webgazer = window.webgazer
 
     const startWebgazer = () =>{
 
       //start the webgazer tracker
       webgazer.setRegression('ridge') /* currently must set regression and tracker */
-          //.setTracker('clmtrackr')
-
           .setGazeListener(function(data, elapsedTime) {
               if (data == null) {
                   return;
@@ -367,8 +365,6 @@ export default function Taks_1( ) {
           webgazer.showVideoPreview(true) /* shows all video previews */
               .showPredictionPoints(true) /* shows a square every 100 milliseconds where current prediction is */
               .applyKalmanFilter(true); /* Kalman Filter defaults to on. Can be toggled by user. */
-
-  
   };
   
   // Set to true if you want to save the data even if you reload the page.

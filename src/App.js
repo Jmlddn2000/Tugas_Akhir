@@ -23,7 +23,7 @@ function App() {
           <Route path="/Taks_2"  element={<Taks_2 />}/>
           <Route path="/Taks_3"  element={<Taks_3 />}/>
           <Route path="/Taks_4"  element={<Taks_4 />}/>
-          <Route path="/Headmap"  element={<HeatmapDeviasion />}/>
+          <Route path="/Headmap"  element={<HeatmapFix />}/>
           <Route path="/OtherWeb"  element={<OtherWeb />}/>
           <Route path="/OtherHeatmap"  element={<OtherHeatmap />}/>
           <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/>

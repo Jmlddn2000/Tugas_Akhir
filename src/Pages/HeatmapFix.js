@@ -4,16 +4,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/canvas.css";
 import Homepage from "./Web/Homepage";
 import { kmeans } from 'ml-kmeans';
+import { map } from "jquery";
 
 export default function HeatmapFix({ hasil }) {
   const heatmapRef = useRef(null);
   const [datas, setDatas] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [popUp, setPopup] = useState([]);
-  const [hoveredPoint, setHoveredPoint] = useState(null);
-  const [isPopupVisible, setPopupVisible] = useState(false);
-  const [varian , setVariance] = useState(0);
-  const [deviasi , setDeviasi] = useState(0);
+  const [data1 , setData1] = useState([]);
+  const [data2 , setData2] = useState([]);
+  const [popup1 , setPopup1] = useState([]);
+  const [popup2 , setPopup2] = useState([]);
+
+  
 
   
 
@@ -40,6 +42,7 @@ export default function HeatmapFix({ hasil }) {
 
     const heatmapInstance = h337.create({
       container: heatmapRef.current,
+      radius: 50,
     });
 
     const points = datas.map((list) => ({
@@ -62,16 +65,6 @@ export default function HeatmapFix({ hasil }) {
       return;
     }
 
-    const heatmapInstance2 = h337.create({
-      container: heatmapRef.current,
-    //   radius: 20,
-      gradient: {
-        0: 'black',
-        0.5: 'black',
-        1: 'black',
-      },
-    });
-
     // merubah data menjadi array
     const data_new = datas.map((obj) => [Math.ceil(obj.x), Math.ceil(obj.y)]);
 
@@ -92,134 +85,107 @@ export default function HeatmapFix({ hasil }) {
 
     // sorting data dari yang terkecil 
     const sortedData = data_cluster.sort((a, b) => a[a.length - 1] - b[b.length - 1]);
-
     
-// Menghitung frekuensi kemunculan setiap nilai terakhir
-    let frequency = {};
-    for (let i = 0; i < sortedData.length; i++) {
-        let lastValue = sortedData[i][sortedData[i].length - 1];
-        if (frequency[lastValue]) {
-            frequency[lastValue]++;
-        } else {
-            frequency[lastValue] = 1;
-        }
-    }
+    // sorting data cluster terbanyak
+    // sorting data cluster terbanyak
+// sorting data cluster terbanyak
+let groupedData = {
+  data1: [],
+  data2: []
+};
 
-    // Menghilangkan data dengan jumlah value terakhir yang sama jika tidak mencapai 20 data
-    let filteredData = [];
-        for (let i = 0; i < sortedData.length; i++) {
-        let lastValue = sortedData[i][sortedData[i].length - 1];
-        if (frequency[lastValue] > 20) {
-            filteredData.push(sortedData[i]);
-        }
-    }
-    
-
-    // console.log(filteredData)
-    const groupedData = {};
-
-    filteredData.forEach(subarray => {
-        const lastValue = subarray[subarray.length - 1];
-        if (groupedData[lastValue]) {
-        groupedData[lastValue].push(subarray);
-        } else {
-        groupedData[lastValue] = [subarray];
-        }
-    });
-
-    console.log(groupedData);
-    const mergedData = Object.values(groupedData).reduce((acc, curr) => acc.concat(curr), []);
-
-    
-    
-    
-
-    
-  const newData = [];
-
-  for(let x = 0; x < mergedData.length; x++) { 
-    const arr = {
-      x : mergedData[x][0],
-      y : mergedData[x][1]
-    }
-    newData.push(arr);
+for (let i = 0; i < sortedData.length; i++) {
+  let lastValue = sortedData[i][sortedData[i].length - 1];
+  if (groupedData[lastValue]) {
+    groupedData[lastValue].push(sortedData[i]);
+  } else {
+    groupedData[lastValue] = [sortedData[i]];
   }
-
-  const points = newData.map((list) => ({
-    x: Math.floor(list.x),
-    y: Math.floor(list.y),
-    value: 1,
-  }));
-
-  const data2 = {
-    max: 1,
-    data: points,
-  };
-
-    heatmapInstance2.setData(data2);
-
-    // menghitung data deviasi dan variance
-    function calculateVariance(data) {
-      const mean = calculateMean(data);
-      const differences = data.map(value => (value - mean) ** 2);
-      const variance = calculateMean(differences);
-      return variance;
-    }
-    
-    function calculateStandardDeviation(data) {
-      const variance = calculateVariance(data);
-      const standardDeviation = Math.sqrt(variance);
-      return standardDeviation;
-    }
-    
-    function calculateMean(data) {
-      const sum = data.reduce((acc, value) => acc + value, 0);
-      const mean = sum / data.length;
-      return mean;
-    }
-
-    const variances = [];
-    const standardDeviations = [];
-
-for (let i = 0; i < mergedData[0].length; i++) {
-  const columnData = mergedData.map(row => row[i]);
-  const variance = calculateVariance(columnData);
-  const standardDeviation = calculateStandardDeviation(columnData);
-
-  variances.push(variance);
-  standardDeviations.push(standardDeviation);
 }
-setVariance(variances)
-setDeviasi(standardDeviations)
-console.log("Variance:", variances);
-console.log("Standard Deviation:", standardDeviations);
+
+// Pemisahan data berdasarkan jumlah cluster
+const data1 = [];
+const data2 = [];
+for (let cluster in groupedData) {
+  if (groupedData[cluster].length >= 10 && groupedData[cluster].length <= 30) {
+    data1.push(...groupedData[cluster]);
+  } else if (groupedData[cluster].length > 30 && groupedData[cluster].length <= 50) {
+    data2.push(...groupedData[cluster]);
+  }
+}
+
+// Mendapatkan rata-rata titik dari keduanya
+const data1_x_mean = data1.reduce((sum, obj) => sum + obj[0], 0) / data1.length;
+const data1_y_mean = data1.reduce((sum, obj) => sum + obj[1], 0) / data1.length;
+const data2_x_mean = data2.reduce((sum, obj) => sum + obj[0], 0) / data2.length;
+const data2_y_mean = data2.reduce((sum, obj) => sum + obj[1], 0) / data2.length;
+
+setPopup1([data1_x_mean, data1_y_mean]);
+setPopup2([data2_x_mean, data2_y_mean]);
+
+setData1(data1.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
+setData2(data2.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
+
 
   }, [datas, isDataLoaded]);
 
-  function handleHeatmapHover(event) {
-    const containerRect = heatmapRef.current.getBoundingClientRect();
-    const x = event.clientX - containerRect.left;
-    const y = event.clientY - containerRect.top;
+  useEffect(() => { 
+    if (!isDataLoaded) {
+      console.log("Data belum dimuat.");
+      return;
+    }
+    const heatmapInstance = h337.create({
+      container: heatmapRef.current,
+      gradient: {
+        0: 'blue', // Warna untuk nilai 0
+        0.5: 'blue', // Warna untuk nilai 0.5
+        1: 'blue', // Warna untuk nilai 1
+      },
+    });
 
-    setHoveredPoint({ x, y });
-    setPopupVisible(true);
-  }
+    const points = data1.map((list) => ({
+      x: Math.floor(list.x),
+      y: Math.floor(list.y),
+      value: 1,
+    }));
 
-  function handleHeatmapHover(event) {
-    const containerRect = heatmapRef.current.getBoundingClientRect();
-    const containerWidth = containerRect.width;
-    const containerHeight = containerRect.height;
+    const data = {
+      max: 1,
+      data: points,
+    };
+
+    heatmapInstance.setData(data);
+  },[isDataLoaded,data1])
+
+  useEffect(() => { 
+    if (!isDataLoaded) {
+      console.log("Data belum dimuat.");
+      return;
+    }
+    const heatmapInstance = h337.create({
+      container: heatmapRef.current,
+      gradient: {
+        0: 'green', // Warna untuk nilai 0
+        0.5: 'green', // Warna untuk nilai 0.5
+        1: 'green', // Warna untuk nilai 1
+      },
+    });
+
+
+    const points = data2.map((list) => ({
+      x: Math.floor(list.x),
+      y: Math.floor(list.y),
+      value: 1,
+    }));
+
+    const data = {
+      max: 1,
+      data: points,
+    };
+
+    heatmapInstance.setData(data);
+  },[isDataLoaded,data2])
   
-    // Calculate random coordinates within a range
-    const rangeX = containerWidth - 200; // Adjust the range as needed
-    const rangeY = containerHeight - 200; // Adjust the range as needed
-  
-    const randomX = Math.floor(Math.random() * rangeX);
-    const randomY = Math.floor(Math.random() * rangeY);
-  
-    setHoveredPoint({ x: randomX, y: randomY });
-    setPopupVisible(true);
-  }
 
   return (
     <div>
@@ -229,19 +195,10 @@ console.log("Standard Deviation:", standardDeviations);
         <input style={{ display: "none" }} type="file" onChange={handleFiles} />
       )}
 
-      <div className="App" ref={heatmapRef} onMouseMove={handleHeatmapHover}>
+      <div className="App" ref={heatmapRef}>
         <Homepage />
-        {isPopupVisible && (
-         <div className="popup" style={{ top: hoveredPoint.y, left: hoveredPoint.x }}>
-         Hovered Point: X: {hoveredPoint.x}, Y: {hoveredPoint.y}
-         <p>Heatmap yang berwarna hitam merupakan <br /> object yang paling menarik pengguna</p>
-         <ul>
-           <li>Variance: x: {Math.floor(varian[0])}, y: {Math.floor(varian[1])}</li>
-           <li>Deviation: x: {Math.floor(deviasi[0])}, y: {Math.floor(deviasi[1])}</li>
-         </ul>
-       </div>
-        )}
       </div>
+
     </div>
   )
         }
