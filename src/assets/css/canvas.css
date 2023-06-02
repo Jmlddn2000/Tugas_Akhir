@@ -6,9 +6,35 @@ canvas{
 .popup {
     position: absolute;
     background-color: white;
-    padding: 10px;
+    padding: 10px !important;
     border: 1px solid black;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     font-size: 14px;
     z-index: 9999;
+    transition: background-color 0.5s ease;
+  }
+
+
+.file-input-label {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    background-color: white;
+    color: #000000;
+    border: 1px solid black;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.5s ease;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+
+  }
+  
+  .file-input-label span {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .file-input-label input {
+    display: none;
   }

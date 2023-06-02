@@ -14,6 +14,8 @@ export default function HeatmapFix({ hasil }) {
   const [data2 , setData2] = useState([]);
   const [popup1 , setPopup1] = useState([]);
   const [popup2 , setPopup2] = useState([]);
+  const [grupCluster , setgrupCluster] = useState([]);
+  const [isPopupVisible, setIsPopupVisible] = useState(true);
 
   
 
@@ -86,7 +88,19 @@ export default function HeatmapFix({ hasil }) {
     // sorting data dari yang terkecil 
     const sortedData = data_cluster.sort((a, b) => a[a.length - 1] - b[b.length - 1]);
     
-    // sorting data cluster terbanyak
+    // sorting data by cluster
+    const groupedDataCLuster = [];
+    for (let i = 0; i < sortedData.length; i++) {
+      let lastValue = sortedData[i][sortedData[i].length - 1];
+      if (groupedDataCLuster[lastValue]) {
+        groupedDataCLuster[lastValue].push(sortedData[i]);
+      } else {
+        groupedDataCLuster[lastValue] = [sortedData[i]];
+      }
+    }
+    console.log(groupedDataCLuster);
+    setgrupCluster(groupedDataCLuster);
+
     // sorting data cluster terbanyak
 // sorting data cluster terbanyak
 let groupedData = {
@@ -109,7 +123,7 @@ const data2 = [];
 for (let cluster in groupedData) {
   if (groupedData[cluster].length >= 10 && groupedData[cluster].length <= 30) {
     data1.push(...groupedData[cluster]);
-  } else if (groupedData[cluster].length > 30 && groupedData[cluster].length <= 50) {
+  } else if (groupedData[cluster].length > 30 && groupedData[cluster].length <= 60) {
     data2.push(...groupedData[cluster]);
   }
 }
@@ -189,16 +203,81 @@ setData2(data2.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
 
   return (
     <div>
-      {!isDataLoaded ? (
-        <input type="file" onChange={handleFiles} />
-      ) : (
-        <input style={{ display: "none" }} type="file" onChange={handleFiles} />
-      )}
+{!isDataLoaded ? (
+  <label htmlFor="file-input" className="file-input-label">
+    <span>Choose File</span>
+    <input id="file-input" type="file" onChange={handleFiles} />
+  </label>
+) : (
+  <input style={{ display: "none" }} type="file" onChange={handleFiles} />
+)}
 
-      <div className="App" ref={heatmapRef}>
-        <Homepage />
+{!isPopupVisible && (
+    <>
+    <div className="popup">
+      <button
+        onClick={() => setIsPopupVisible(!isPopupVisible)}
+        style={{
+          backgroundColor: "#ffffff",
+          color: "#333333",
+          borderRadius: "10px",
+          cursor: "pointer",
+          // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+        }}
+
+      >
+        X
+      </button>
+      <div className="border border-3 my-5 border-dark">
+        <h3>Biru</h3>
+        {/* <p>Titik tengah : {popup1[0]}, {popup1[1]}</p> */}
+        <p style={{fontWeight: "bold"}}> note : Cluster yang memiliki data lebih dari 10-30</p>
+        <p>Jumlah titik : {data1.length}</p>
       </div>
-
+      <div className="border border-3 my-5 border-dark">
+        <h3>Hijau</h3>
+        {/* <p>Titik tengah : {popup2[0]}, {popup2[1]}</p> */}
+        <p style={{fontWeight: "bold"}}> note : Cluster yang memiliki data lebih dari 30-60</p>
+        <p>Jumlah titik : {data2.length}</p>
+      </div>
+      <div className="border border-3 my-5 border-dark"  >
+        <h3>
+          grupCluster
+        </h3>
+        <p>
+          {grupCluster.map((obj, i) => (
+            <div key={i }>
+              <p>Cluster {i} : Jumlah titik : {obj.length}</p>
+            </div>
+          ))}
+          </p>
+      </div>
+      
     </div>
+    </>
+  )}
+{isPopupVisible && (
+  <button
+    onClick={() => setIsPopupVisible(!isPopupVisible)}
+    style={{
+      padding: "8px",
+      backgroundColor: "#ffffff",
+      color: "#333333",
+      borderRadius: "10px",
+      cursor: "pointer",
+      position: "absolute",
+      zIndex: "999",
+      // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    }}
+  >
+    {isPopupVisible ? "Hide Popup" : "Show Popup"}
+  </button>
+)}
+
+  <div className="App" ref={heatmapRef}>
+    <Homepage />
+  </div>
+</div>
+
   )
         }

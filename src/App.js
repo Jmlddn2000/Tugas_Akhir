@@ -9,8 +9,8 @@ import Taks_4 from './Pages/Taks_4';
 import OtherWeb from './Pages/OtherWeb';
 import OtherHeatmap from './Pages/OtherHeatmap';
 import ContohWeb from './Pages/ContohWeb'
-import HeatmapDeviasion from './Pages/HeatmapDeviasion';
 import HeatmapFix from './Pages/HeatmapFix';
+import Heatmap from './Pages/Heatmap';
 function App() {
 
   return (
@@ -18,16 +18,16 @@ function App() {
     <BrowserRouter>
 
         <Routes>
-          <Route path="/"  element={<Home />}/>
+          <Route path="/"  element={<HeatmapFix />}/>
           <Route path="/Taks_1"  element={<Taks_1 />}/>
           <Route path="/Taks_2"  element={<Taks_2 />}/>
           <Route path="/Taks_3"  element={<Taks_3 />}/>
           <Route path="/Taks_4"  element={<Taks_4 />}/>
-          <Route path="/Headmap"  element={<HeatmapFix />}/>
+          <Route path="/Headmap"  element={<Heatmap />}/>
           <Route path="/OtherWeb"  element={<OtherWeb />}/>
           <Route path="/OtherHeatmap"  element={<OtherHeatmap />}/>
-          <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/>
-          <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/>
+          {/* <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/>
+          <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/> */}
 
 
 
