@@ -270,7 +270,7 @@ setData2(data2.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
       // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
     }}
   >
-    {isPopupVisible ? "Hide Popup" : "Show Popup"}
+    {isPopupVisible ? "Show Popup" : "hide Popup"}
   </button>
 )}
 
