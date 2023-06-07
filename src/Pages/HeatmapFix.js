@@ -10,16 +10,16 @@ export default function HeatmapFix({ hasil }) {
   const heatmapRef = useRef(null);
   const [datas, setDatas] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [data1 , setData1] = useState([]);
-  const [data2 , setData2] = useState([]);
-  const [popup1 , setPopup1] = useState([]);
-  const [popup2 , setPopup2] = useState([]);
-  const [grupCluster , setgrupCluster] = useState([]);
+  const [data1, setData1] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [popup1, setPopup1] = useState([]);
+  const [popup2, setPopup2] = useState([]);
+  const [grupCluster, setgrupCluster] = useState([]);
   const [isPopupVisible, setIsPopupVisible] = useState(true);
 
-  
 
-  
+
+
 
   function handleFiles(e) {
     setIsDataLoaded(false);
@@ -87,7 +87,7 @@ export default function HeatmapFix({ hasil }) {
 
     // sorting data dari yang terkecil 
     const sortedData = data_cluster.sort((a, b) => a[a.length - 1] - b[b.length - 1]);
-    
+
     // sorting data by cluster
     const groupedDataCLuster = [];
     for (let i = 0; i < sortedData.length; i++) {
@@ -102,48 +102,48 @@ export default function HeatmapFix({ hasil }) {
     setgrupCluster(groupedDataCLuster);
 
     // sorting data cluster terbanyak
-// sorting data cluster terbanyak
-let groupedData = {
-  data1: [],
-  data2: []
-};
+    // sorting data cluster terbanyak
+    let groupedData = {
+      data1: [],
+      data2: []
+    };
 
-for (let i = 0; i < sortedData.length; i++) {
-  let lastValue = sortedData[i][sortedData[i].length - 1];
-  if (groupedData[lastValue]) {
-    groupedData[lastValue].push(sortedData[i]);
-  } else {
-    groupedData[lastValue] = [sortedData[i]];
-  }
-}
+    for (let i = 0; i < sortedData.length; i++) {
+      let lastValue = sortedData[i][sortedData[i].length - 1];
+      if (groupedData[lastValue]) {
+        groupedData[lastValue].push(sortedData[i]);
+      } else {
+        groupedData[lastValue] = [sortedData[i]];
+      }
+    }
 
-// Pemisahan data berdasarkan jumlah cluster
-const data1 = [];
-const data2 = [];
-for (let cluster in groupedData) {
-  if (groupedData[cluster].length >= 10 && groupedData[cluster].length <= 30) {
-    data1.push(...groupedData[cluster]);
-  } else if (groupedData[cluster].length > 30 && groupedData[cluster].length <= 60) {
-    data2.push(...groupedData[cluster]);
-  }
-}
+    // Pemisahan data berdasarkan jumlah cluster
+    const data1 = [];
+    const data2 = [];
+    for (let cluster in groupedData) {
+      if (groupedData[cluster].length >= 10 && groupedData[cluster].length <= 30) {
+        data1.push(...groupedData[cluster]);
+      } else if (groupedData[cluster].length > 30 && groupedData[cluster].length <= 60) {
+        data2.push(...groupedData[cluster]);
+      }
+    }
 
-// Mendapatkan rata-rata titik dari keduanya
-const data1_x_mean = data1.reduce((sum, obj) => sum + obj[0], 0) / data1.length;
-const data1_y_mean = data1.reduce((sum, obj) => sum + obj[1], 0) / data1.length;
-const data2_x_mean = data2.reduce((sum, obj) => sum + obj[0], 0) / data2.length;
-const data2_y_mean = data2.reduce((sum, obj) => sum + obj[1], 0) / data2.length;
+    // Mendapatkan rata-rata titik dari keduanya
+    const data1_x_mean = data1.reduce((sum, obj) => sum + obj[0], 0) / data1.length;
+    const data1_y_mean = data1.reduce((sum, obj) => sum + obj[1], 0) / data1.length;
+    const data2_x_mean = data2.reduce((sum, obj) => sum + obj[0], 0) / data2.length;
+    const data2_y_mean = data2.reduce((sum, obj) => sum + obj[1], 0) / data2.length;
 
-setPopup1([data1_x_mean, data1_y_mean]);
-setPopup2([data2_x_mean, data2_y_mean]);
+    setPopup1([data1_x_mean, data1_y_mean]);
+    setPopup2([data2_x_mean, data2_y_mean]);
 
-setData1(data1.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
-setData2(data2.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
+    setData1(data1.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
+    setData2(data2.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
 
 
   }, [datas, isDataLoaded]);
 
-  useEffect(() => { 
+  useEffect(() => {
     if (!isDataLoaded) {
       console.log("Data belum dimuat.");
       return;
@@ -169,9 +169,9 @@ setData2(data2.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
     };
 
     heatmapInstance.setData(data);
-  },[isDataLoaded,data1])
+  }, [isDataLoaded, data1])
 
-  useEffect(() => { 
+  useEffect(() => {
     if (!isDataLoaded) {
       console.log("Data belum dimuat.");
       return;
@@ -198,86 +198,124 @@ setData2(data2.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
     };
 
     heatmapInstance.setData(data);
-  },[isDataLoaded,data2])
-  
+  }, [isDataLoaded, data2])
+
 
   return (
-    <div>
-{!isDataLoaded ? (
-  <label htmlFor="file-input" className="file-input-label">
-    <span>Choose File</span>
-    <input id="file-input" type="file" onChange={handleFiles} />
-  </label>
-) : (
-  <input style={{ display: "none" }} type="file" onChange={handleFiles} />
-)}
-
-{!isPopupVisible && (
-    <>
-    <div className="popup">
-      <button
-        onClick={() => setIsPopupVisible(!isPopupVisible)}
-        style={{
+    <div >
+      {!isDataLoaded ? (
+        <label htmlFor="file-input" className="file-input-label" style={{
+          position: "fixed",
+          top: "10px",
+          // right: "-10px",
           backgroundColor: "#ffffff",
           color: "#333333",
           borderRadius: "10px",
           cursor: "pointer",
+          zIndex: "999",
           // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-        }}
+        }}>
+          <span>Choose File</span>
+          <input id="file-input" type="file" onChange={handleFiles} />
+        </label>
+      ) : (
+        <input style={{ display: "none" }} type="file" onChange={handleFiles} />
+      )}
 
-      >
-        X
-      </button>
-      <div className="border border-3 my-5 border-dark">
-        <h3>Biru</h3>
-        {/* <p>Titik tengah : {popup1[0]}, {popup1[1]}</p> */}
-        <p style={{fontWeight: "bold"}}> note : Cluster yang memiliki data lebih dari 10-30</p>
-        <p>Jumlah titik : {data1.length}</p>
+      {isPopupVisible && (
+        <>
+          <button
+            onClick={() => setIsPopupVisible(!isPopupVisible)}
+            style={{
+              position: "fixed",
+              top: "10px",
+              right: "10px",
+              padding: "8px",
+              backgroundColor: "#ffffff",
+              color: "#333333",
+              borderRadius: "10px",
+              cursor: "pointer",
+              zIndex: "999",
+              // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            {isPopupVisible ? "Show Popup" : "Hide Popup"}
+          </button>
+        </>
+      )}
+
+      {!isPopupVisible && (
+        
+        <div
+          className="popup"
+          style={{
+            position: "fixed",
+            top: "50px",
+            right: "50px",
+            padding: "20px",
+            backgroundColor: "#ffffff",
+            color: "#333333",
+            borderRadius: "10px",
+            // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+        <h4 style={{
+          textAlign: "center",
+        }}>Deskripsi Koordinat </h4>
+
+          <button
+            onClick={() => setIsPopupVisible(!isPopupVisible)}
+            style={{
+              position: "absolute",
+              top: "5px",
+              right: "5px",
+              padding: "5px",
+              paddingRight: "10px",
+              paddingLeft: "10px",
+              backgroundColor: "#ffffff",
+              color: "#333333",
+              borderRadius: "10px",
+              cursor: "pointer",
+              // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            X
+          </button>
+          <div className="border border-3 my-5 border-dark" style={{ backgroundColor: "#F0F0F0", borderRadius: "10px", padding: "20px" }}>
+            <h3 style={{ color: "#333333", marginBottom: "10px" }}>Biru</h3>
+            {/* <p>Titik tengah : {popup1[0]}, {popup1[1]}</p> */}
+            <p style={{ fontWeight: "bold", marginBottom: "5px" }}>
+              Note: Cluster yang memiliki data lebih dari 10-30
+            </p>
+            <p style={{ marginBottom: "5px" }}>Jumlah titik: {data1.length}</p>
+          </div>
+          <div className="border border-3 my-5 border-dark" style={{ backgroundColor: "#F0F0F0", borderRadius: "10px", padding: "20px" }}>
+            <h3 style={{ color: "#333333", marginBottom: "10px" }}>Hijau</h3>
+            {/* <p>Titik tengah : {popup2[0]}, {popup2[1]}</p> */}
+            <p style={{ fontWeight: "bold", marginBottom: "5px" }}>
+              Note: Cluster yang memiliki data lebih dari 30-60
+            </p>
+            <p style={{ marginBottom: "5px" }}>Jumlah titik: {data2.length}</p>
+          </div>
+          <div className="border border-3 my-5 border-dark" style={{ maxHeight: "200px", overflow: "auto", backgroundColor: "#F0F0F0", borderRadius: "10px", padding: "20px" }}>
+            <h3 style={{ color: "#333333", marginBottom: "10px" }}>grupCluster</h3>
+            {grupCluster.map((obj, i) => (
+              <div key={i} style={{ marginBottom: "5px" }}>
+                <p>
+                  Cluster {i}: Jumlah titik: {obj.length}
+                </p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      )}
+
+      <div className="App" ref={heatmapRef}>
+        <Homepage />
       </div>
-      <div className="border border-3 my-5 border-dark">
-        <h3>Hijau</h3>
-        {/* <p>Titik tengah : {popup2[0]}, {popup2[1]}</p> */}
-        <p style={{fontWeight: "bold"}}> note : Cluster yang memiliki data lebih dari 30-60</p>
-        <p>Jumlah titik : {data2.length}</p>
-      </div>
-      <div className="border border-3 my-5 border-dark"  >
-        <h3>
-          grupCluster
-        </h3>
-        <p>
-          {grupCluster.map((obj, i) => (
-            <div key={i }>
-              <p>Cluster {i} : Jumlah titik : {obj.length}</p>
-            </div>
-          ))}
-          </p>
-      </div>
-      
     </div>
-    </>
-  )}
-{isPopupVisible && (
-  <button
-    onClick={() => setIsPopupVisible(!isPopupVisible)}
-    style={{
-      padding: "8px",
-      backgroundColor: "#ffffff",
-      color: "#333333",
-      borderRadius: "10px",
-      cursor: "pointer",
-      position: "absolute",
-      zIndex: "999",
-      // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-    }}
-  >
-    {isPopupVisible ? "Show Popup" : "hide Popup"}
-  </button>
-)}
 
-  <div className="App" ref={heatmapRef}>
-    <Homepage />
-  </div>
-</div>
 
   )
-        }
+}

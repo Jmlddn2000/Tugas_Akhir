@@ -8,52 +8,47 @@ const Home = () => {
       <div className="container mt-5">
       <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">
-            <Link className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="false" to="/">Home</Link>
-            <Link className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" to="/tugas">Tugas</Link>
-            <Link className="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false" to="/#cara-menggunakan-webgazer">Cara menggunakan</Link>
+            <a href="/" className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="false" >Home</a>
+            <a href="#tugas" className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Tugas</a>
+            <a href="#cara-menggunakan-webgazer" className="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false" to="/#cara-menggunakan-webgazer">Cara Menggunakan</a>
           </div>
         </nav>
       </div>
 
-      <div className="container">
+      <div className="container ">
         <div className="text-center mt-5">
-          <h1>Tugas</h1>
-        </div>
-        <ul className="list-group mt-4">
+          <h1 id="tugas">Tugas</h1>
+        </div >
+        <ul className="list-group mt-4" >
           <li className="list-group-item">
-            <button type="button" className="btn btn-outline-dark fs-4 fw-bold ">
-              <Link to="/Taks_1">a. Melihat dan mengeksplorasi situs website selama 30 detik</Link>
+            <button type="button" className="btn btn-outline-dark fs-4 fw-bold" >
+              <Link style={{textDecoration: "none"}} to="/Taks_1">a. Melihat dan mengeksplorasi situs website selama 30 detik</Link>
             </button>
           </li>
           <li className="list-group-item">
             <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
-              <Link to="/Taks_2">b. Mencari fitur pada header dalam 10 detik</Link>
+              <Link style={{textDecoration: "none"}} to="/Taks_2">b. Mencari fitur pada header dalam 10 detik</Link>
             </button>
           </li>
           <li className="list-group-item">
             <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
-              <Link to="/Taks_3">c. Mencari list game pada website dalam 10 detik</Link>
+              <Link style={{textDecoration: "none"}} to="/Taks_3">c. Mencari list game pada website dalam 10 detik</Link>
             </button>
           </li>
           <li className="list-group-item">
             <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
-              <Link to="/Taks_4">d. Mencari game yang paling disukai dalam 10 detik</Link>
+              <Link style={{textDecoration: "none"}} to="/Taks_4">d. Mencari game yang paling disukai dalam 10 detik</Link>
             </button>
           </li>
           <li className="list-group-item">Fitur Lain</li>
           <li className="list-group-item">
             <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
-              <Link to="/OtherWeb">Other Website</Link>
+              <Link style={{textDecoration: "none"}} to="/InputLink">Other </Link>
             </button>
           </li>
           <li className="list-group-item">
             <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
-              <Link to="/OtherHeatmap">Other Heatmap</Link>
-            </button>
-          </li>
-          <li className="list-group-item">
-            <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
-              <Link to="/Headmap">Heatmap</Link>
+              <Link style={{textDecoration: "none"}} to="/Headmap">Heatmap</Link>
             </button>
           </li>
         </ul>

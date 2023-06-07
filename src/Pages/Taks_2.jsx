@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
 import Homepage from './Web/Homepage';
-import ContohWeb from './ContohWeb';
 
 export default function Taks_2( ) {
 
@@ -435,10 +434,6 @@ export default function Taks_2( ) {
             <input type="button" className="Calibration" id="Pt9"></input>
           </div>
 
-        {/* canvas */}
-        {/* <div >
-          <ContohWeb />
-        </div> */}
         <Homepage exportData = {exportData} />
 </div>
 

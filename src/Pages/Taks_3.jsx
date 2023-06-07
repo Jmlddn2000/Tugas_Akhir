@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
 import Homepage from './Web/Homepage';
-import ContohWeb from './ContohWeb';
 
 export default function Taks_3( ) {
 

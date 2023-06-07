@@ -1,16 +1,15 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from './Pages/Home';
-import Headmap from './Pages/Headmap';
 import Taks_1 from './Pages/Taks_1';
 import Taks_2 from './Pages/Taks_2';
 import Taks_3 from './Pages/Taks_3';
 import Taks_4 from './Pages/Taks_4';
 import OtherWeb from './Pages/OtherWeb';
 import OtherHeatmap from './Pages/OtherHeatmap';
-import ContohWeb from './Pages/ContohWeb'
 import HeatmapFix from './Pages/HeatmapFix';
-import Heatmap from './Pages/Heatmap';
+import InputLink from './Pages/Web/InputLink';
+
 function App() {
 
   return (
@@ -26,20 +25,8 @@ function App() {
           <Route path="/Headmap"  element={<HeatmapFix />}/>
           <Route path="/OtherWeb"  element={<OtherWeb />}/>
           <Route path="/OtherHeatmap"  element={<OtherHeatmap />}/>
-          {/* <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/>
-          <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/> */}
+          <Route path="/InputLink"  element={<InputLink />}/>
 
-
-
-
-
-
-
-          <Route path="/headmap"  element={<Headmap />}/>
-          {/* <Route path="/about/about-app" component={AboutTheApp}/>
-          <Route path="/about/about-author" component={AboutTheAuthor}/> */}
-          {/* <Route component={NotFount} /> */}
-        
         </Routes>
     </BrowserRouter>
 
