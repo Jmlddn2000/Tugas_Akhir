@@ -16,18 +16,12 @@ export default function Taks_1( ) {
 
 
 
-  useEffect(() => {
-      canvasRef.current.height = document.documentElement.scrollHeight - window.innerHeight;
-      canvasRef.current.width = window.innerWidth;
-      canvasRef.current.height = window.innerHeight;
+  // useEffect(() => {
+  //     // canvasRef.current.height = document.documentElement.scrollHeight - window.innerHeight;
+  //     canvasRef.current.width = window.innerWidth;
+  //     // canvasRef.current.height = window.innerHeight;
 
-    // const body = document.querySelector('body');
-    
-    // canvasRef.current.heig
- 
-    // console.log(window)
-    // console.log(canvasRef.current.height)
-  },[])
+  // },[])
 
   
   useEffect(() => {

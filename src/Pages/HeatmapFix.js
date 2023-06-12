@@ -253,7 +253,7 @@ export default function HeatmapFix({ hasil }) {
             top: "50px",
             right: "50px",
             padding: "20px",
-            backgroundColor: "#ffffff",
+            backgroundColor: "#e9692c",
             color: "#333333",
             borderRadius: "10px",
             // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
