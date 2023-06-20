@@ -40,6 +40,11 @@ const Home = () => {
               <Link style={{textDecoration: "none"}} to="/Taks_4">d. Mencari game yang paling disukai dalam 10 detik</Link>
             </button>
           </li>
+          <li className="list-group-item">
+            <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
+              <Link style={{textDecoration: "none"}} to="/Taks_5">e. Mencari fitur footer dalam 10 detik</Link>
+            </button>
+          </li>
           <li className="list-group-item">Fitur Lain</li>
           <li className="list-group-item">
             <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
@@ -49,6 +54,11 @@ const Home = () => {
           <li className="list-group-item">
             <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
               <Link style={{textDecoration: "none"}} to="/Headmap">Heatmap</Link>
+            </button>
+          </li>
+          <li className="list-group-item">
+            <button type="button" className="btn btn-outline-dark fs-4 fw-bold">
+              <Link style={{textDecoration: "none"}} to="/Titik_Fokus_Heatmap">Titik Fokus Heatmap</Link>
             </button>
           </li>
         </ul>
