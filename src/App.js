@@ -1,16 +1,17 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from './Pages/Home';
-import Headmap from './Pages/Headmap';
 import Taks_1 from './Pages/Taks_1';
 import Taks_2 from './Pages/Taks_2';
 import Taks_3 from './Pages/Taks_3';
 import Taks_4 from './Pages/Taks_4';
+import Taks_5 from './Pages/Taks_5';
 import OtherWeb from './Pages/OtherWeb';
 import OtherHeatmap from './Pages/OtherHeatmap';
-import ContohWeb from './Pages/ContohWeb'
-import HeatmapDeviasion from './Pages/HeatmapDeviasion';
 import HeatmapFix from './Pages/HeatmapFix';
+import InputLink from './Pages/Web/InputLink';
+import Titik_Fokus_Heatmap from './Pages/Titik_Fokus_Heatmap';
+
 function App() {
 
   return (
@@ -23,23 +24,13 @@ function App() {
           <Route path="/Taks_2"  element={<Taks_2 />}/>
           <Route path="/Taks_3"  element={<Taks_3 />}/>
           <Route path="/Taks_4"  element={<Taks_4 />}/>
-          <Route path="/Headmap"  element={<HeatmapDeviasion />}/>
+          <Route path="/Taks_5"  element={<Taks_5 />}/>
+          <Route path="/Headmap"  element={<HeatmapFix />}/>
+          <Route path="/Titik_Fokus_Heatmap"  element={<Titik_Fokus_Heatmap />}/>
           <Route path="/OtherWeb"  element={<OtherWeb />}/>
           <Route path="/OtherHeatmap"  element={<OtherHeatmap />}/>
-          <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/>
-          <Route path="/HeatmapDeviasion"  element={<HeatmapDeviasion />}/>
+          <Route path="/InputLink"  element={<InputLink />}/>
 
-
-
-
-
-
-
-          <Route path="/headmap"  element={<Headmap />}/>
-          {/* <Route path="/about/about-app" component={AboutTheApp}/>
-          <Route path="/about/about-author" component={AboutTheAuthor}/> */}
-          {/* <Route component={NotFount} /> */}
-        
         </Routes>
     </BrowserRouter>
 

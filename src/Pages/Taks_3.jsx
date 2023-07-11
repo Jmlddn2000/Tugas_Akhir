@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
 import Homepage from './Web/Homepage';
-import ContohWeb from './ContohWeb';
 
 export default function Taks_3( ) {
 
@@ -17,18 +16,18 @@ export default function Taks_3( ) {
 
 
 
-  useEffect(() => {
-      canvasRef.current.height = document.documentElement.scrollHeight - window.innerHeight;
-      canvasRef.current.width = window.innerWidth;
-      canvasRef.current.height = window.innerHeight;
+  // useEffect(() => {
+  //     canvasRef.current.height = document.documentElement.scrollHeight - window.innerHeight;
+  //     canvasRef.current.width = window.innerWidth;
+  //     canvasRef.current.height = window.innerHeight;
 
-    // const body = document.querySelector('body');
+  //   // const body = document.querySelector('body');
     
-    // canvasRef.current.heig
+  //   // canvasRef.current.heig
  
-    // console.log(window)
-    // console.log(canvasRef.current.height)
-  },[])
+  //   // console.log(window)
+  //   // console.log(canvasRef.current.height)
+  // },[])
 
   
   useEffect(() => {

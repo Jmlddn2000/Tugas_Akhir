@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import h337 from "heatmap.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/canvas.css";
-import { useLocation } from "react-router-dom";
+import Homepage from "./Web/Homepage";
 import { kmeans } from 'ml-kmeans';
+import { map } from "jquery";
+import { useLocation } from 'react-router-dom'
 
 
-export default function HeatmapFix({ hasil }) {
+export default function Titik_Fokus_Heatmap({ hasil }) {
   const heatmapRef = useRef(null);
   const [datas, setDatas] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -16,57 +18,18 @@ export default function HeatmapFix({ hasil }) {
   const [popup2, setPopup2] = useState([]);
   const [grupCluster, setgrupCluster] = useState([]);
   const [isPopupVisible, setIsPopupVisible] = useState(true);
+  const [isBlueHeatmapVisible, setIsBlueHeatmapVisible] = useState(true);
+  const [isGreenHeatmapVisible, setIsGreenHeatmapVisible] = useState(true);
+
   const location = useLocation()
   const { from } = location.state
 
-  function handleFiles(e) {
-    setIsDataLoaded(false);
-    const file = e.target.files[0];
-
-    const reader = new FileReader();
-
-    reader.onload = function (event) {
-      const jsonData = JSON.parse(event.target.result);
-      setDatas(jsonData);
-      setIsDataLoaded(true);
-    };
-
-    reader.readAsText(file);
-  }
 
   useEffect(() => {
-    if (!isDataLoaded) {
-      console.log("Data belum dimuat.");
-      return;
-    }
-
-    const heatmapInstance = h337.create({
-      container: heatmapRef.current,
-      radius: 50,
-    });
-
-    const points = datas.map((list) => ({
-      x: Math.floor(list.x),
-      y: Math.floor(list.y),
-      value: 1,
-    }));
-
-    const data = {
-      max: 1,
-      data: points,
-    };
-
-    heatmapInstance.setData(data);
-  }, [datas, isDataLoaded]);
-
-  useEffect(() => {
-    if (!isDataLoaded) {
-      console.log("Data belum dimuat.");
-      return;
-    }
+    console.log(from)
 
     // merubah data menjadi array
-    const data_new = datas.map((obj) => [Math.ceil(obj.x), Math.ceil(obj.y)]);
+    const data_new = from.map((obj) => [Math.ceil(obj.x), Math.ceil(obj.y)]);
 
     // membuat titik
     const titik = [];
@@ -139,13 +102,9 @@ export default function HeatmapFix({ hasil }) {
     setData2(data2.map(obj => ({ x: obj[0], y: obj[1], value: 1 })));
 
 
-  }, [datas, isDataLoaded]);
+  }, [from, isDataLoaded]);
 
   useEffect(() => {
-    if (!isDataLoaded) {
-      console.log("Data belum dimuat.");
-      return;
-    }
     const heatmapInstance = h337.create({
       container: heatmapRef.current,
       gradient: {
@@ -170,10 +129,6 @@ export default function HeatmapFix({ hasil }) {
   }, [isDataLoaded, data1])
 
   useEffect(() => {
-    if (!isDataLoaded) {
-      console.log("Data belum dimuat.");
-      return;
-    }
     const heatmapInstance = h337.create({
       container: heatmapRef.current,
       gradient: {
@@ -201,25 +156,7 @@ export default function HeatmapFix({ hasil }) {
 
   return (
     <div >
-      {!isDataLoaded ? (
-        <label htmlFor="file-input" className="file-input-label" style={{
-          position: "fixed",
-          top: "10px",
-          // right: "-10px",
-          backgroundColor: "#ffffff",
-          color: "#333333",
-          borderRadius: "10px",
-          cursor: "pointer",
-          zIndex: "999",
-          // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-        }}>
-          <span>Choose File</span>
-          <input id="file-input" type="file" onChange={handleFiles} />
-        </label>
-      ) : (
-        <input style={{ display: "none" }} type="file" onChange={handleFiles} />
-      )}
-
+      
       {isPopupVisible && (
         <>
           <button
@@ -239,6 +176,8 @@ export default function HeatmapFix({ hasil }) {
           >
             {isPopupVisible ? "Show Popup" : "Hide Popup"}
           </button>
+
+          
         </>
       )}
 
@@ -251,7 +190,7 @@ export default function HeatmapFix({ hasil }) {
             top: "50px",
             right: "50px",
             padding: "20px",
-            backgroundColor: "#ffffff",
+            backgroundColor: "#e9692c",
             color: "#333333",
             borderRadius: "10px",
             // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
@@ -279,6 +218,8 @@ export default function HeatmapFix({ hasil }) {
           >
             X
           </button>
+
+          
           <div className="border border-3 my-5 border-dark" style={{ backgroundColor: "#F0F0F0", borderRadius: "10px", padding: "20px" }}>
             <h3 style={{ color: "#333333", marginBottom: "10px" }}>Biru</h3>
             {/* <p>Titik tengah : {popup1[0]}, {popup1[1]}</p> */}
@@ -310,7 +251,7 @@ export default function HeatmapFix({ hasil }) {
       )}
 
       <div className="App" ref={heatmapRef}>
-      <iframe src={from} frameborder="0" style={{width: '100%', height: '100vh', zIndex:999}}></iframe>
+        <Homepage />
       </div>
     </div>
 

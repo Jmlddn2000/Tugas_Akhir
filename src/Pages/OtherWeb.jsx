@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react'
+import { useLocation } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../assets/css/Kalibrasi.css'
 import $ from 'jquery';
@@ -10,6 +11,8 @@ export default function OtherWeb( ) {
   const [koordinat, setKoordinat] = useState([])
   const [status, setStatus] = useState("false")
   const [web, webIframe] = useState("")
+  const location = useLocation()
+  const { from } = location.state
   
   const canvasRef = useRef(null)
 
@@ -403,8 +406,6 @@ export default function OtherWeb( ) {
         {/* <p>
                   <a onClick={Restart}  href="#">Recalibrate</a>
         </p> */}
-        {web === "" ? <input style={{zIndex:99999}} type="text" onChange={(e) => {webIframe(e.target.value)}} /> : <input style={{display:'none'}} type="text" onChange={(e) => {webIframe(e.target.value)}} /> }
-
         <nav id="webgazerNavbar" className="navbar navbar-default  position-absolute  " >
           <div className="container-fluid " >
 
@@ -428,7 +429,7 @@ export default function OtherWeb( ) {
             </div>
           </nav>
         {/* <!-- Calibration points --> */}
-        <div className="calibrationDiv">
+        <div className="calibrationDiv" style={{zIndex: 999,}}>
             <input type="button" className="Calibration" id="Pt1"></input>
             <input type="button" className="Calibration" id="Pt2"></input>
             <input type="button" className="Calibration" id="Pt3"></input>
@@ -443,7 +444,7 @@ export default function OtherWeb( ) {
         {/* canvas */}
         
             {/* <input type="text" onChange={(e) => {webIframe(e.target.value)}} /> */}
-        <iframe src={String(web)} frameborder="0" style={{width: '100%', height: '100vh', zIndex:999}}></iframe>
+        <iframe src={from} frameborder="0" style={{width: '100%', height: '100vh', zIndex:999}}></iframe>
         <canvas ref={canvasRef} id="plotting_canvas" style={{cursor:"crosshair", position: "absolute"}}></canvas>
 
 

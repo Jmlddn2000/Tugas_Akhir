@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
 import Homepage from './Web/Homepage';
-import ContohWeb from './ContohWeb';
 
 export default function Taks_1( ) {
 
@@ -17,18 +16,12 @@ export default function Taks_1( ) {
 
 
 
-  useEffect(() => {
-      canvasRef.current.height = document.documentElement.scrollHeight - window.innerHeight;
-      canvasRef.current.width = window.innerWidth;
-      canvasRef.current.height = window.innerHeight;
+  // useEffect(() => {
+  //     // canvasRef.current.height = document.documentElement.scrollHeight - window.innerHeight;
+  //     canvasRef.current.width = window.innerWidth;
+  //     // canvasRef.current.height = window.innerHeight;
 
-    // const body = document.querySelector('body');
-    
-    // canvasRef.current.heig
- 
-    // console.log(window)
-    // console.log(canvasRef.current.height)
-  },[])
+  // },[])
 
   
   useEffect(() => {
@@ -297,7 +290,7 @@ export default function Taks_1( ) {
     * Sets store_points to true, so all the occuring prediction
     * points are stored
     */
-    const webgazer = window.webgazer
+    // const webgazer = window.webgazer
     function store_points_variable(){
       webgazer.params.storingPoints = true;
     }
@@ -334,14 +327,12 @@ export default function Taks_1( ) {
       console.log(obj)
     }
 
-
+    const webgazer = window.webgazer
 
     const startWebgazer = () =>{
 
       //start the webgazer tracker
       webgazer.setRegression('ridge') /* currently must set regression and tracker */
-          //.setTracker('clmtrackr')
-
           .setGazeListener(function(data, elapsedTime) {
               if (data == null) {
                   return;
@@ -367,8 +358,6 @@ export default function Taks_1( ) {
           webgazer.showVideoPreview(true) /* shows all video previews */
               .showPredictionPoints(true) /* shows a square every 100 milliseconds where current prediction is */
               .applyKalmanFilter(true); /* Kalman Filter defaults to on. Can be toggled by user. */
-
-  
   };
   
   // Set to true if you want to save the data even if you reload the page.

@@ -8,9 +8,9 @@ export default function ListGames(props) {
     const [games, setGames] = useState(
         [
             {
-                "Game": "After Burner",
+                "Game": "GTA V",
                 "GameLink": "https://en.wikipedia.org/wiki/After_Burner",
-                "Image" : "https://upload.wikimedia.org/wikipedia/en/6/6e/BC_Racers_Coverart.png",
+                "Image" : "https://upload.wikimedia.org/wikipedia/id/a/a5/Grand_Theft_Auto_V.png",
                 "Year": 1995,
                 "Dev": "Sega",
                 "DevLink": "https://en.wikipedia.org/wiki/Sega",
@@ -20,9 +20,9 @@ export default function ListGames(props) {
                 "PlatformLink": "https://en.wikipedia.org/wiki/32X"
               },
               {
-                "Game": "BC Racers",
+                "Game": "PES 2022",
                 "GameLink": "https://en.wikipedia.org/wiki/BC_Racers",
-                "Image" : "https://upload.wikimedia.org/wikipedia/en/6/6e/BC_Racers_Coverart.png",
+                "Image" : "https://lzd-img-global.slatic.net/g/p/4f7ff533ef00bbf92d3cb5defaabc01c.jpg_720x720q80.jpg_.webp",
                 "Year": "1995",
                 "Dev": "Core Design",
                 "DevLink": "https://en.wikipedia.org/wiki/Core_Design",
@@ -56,9 +56,9 @@ export default function ListGames(props) {
                 "PlatformLink": "https://en.wikipedia.org/wiki/32X"
               },
               {
-                "Game": "Corpse Killer",
+                "Game": "FIFA",
                 "GameLink": "https://en.wikipedia.org/wiki/Corpse_Killer",
-                "Image": "https://upload.wikimedia.org/wikipedia/en/6/6e/BC_Racers_Coverart.png",
+                "Image": "https://assets-prd.ignimgs.com/2022/01/19/fifa-mobile-2022-button-1642569748592.jpg?width=300&crop=1%3A1%2Csmart",
                 "Year": "1994",
                 "Dev": "Digital Pictures",
                 "DevLink": "https://en.wikipedia.org/wiki/Digital_Pictures",
@@ -92,9 +92,9 @@ export default function ListGames(props) {
                 "PlatformLink": "https://en.wikipedia.org/wiki/32X"
               },
               {
-                "Game": "Doom",
+                "Game": "Downhill ",
                 "GameLink": "https://en.wikipedia.org/wiki/Doom_(1993_video_game)",
-                "Image": "https://upload.wikimedia.org/wikipedia/en/6/6e/BC_Racers_Coverart.png",
+                "Image": "https://www.giantbomb.com/a/uploads/scale_small/8/87790/2275982-box_dhd.png",
                 "Year": 1994,
                 "Dev": "id Software",
                 "DevLink": "https://en.wikipedia.org/wiki/Id_Software",

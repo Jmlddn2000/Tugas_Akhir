@@ -1,58 +1,82 @@
 import {useEffect, useRef, useState} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../assets/css/Kalibrasi.css'
+// import '../assets/css/Kalibrasi.css'
 import $ from 'jquery';
 import Swal from 'sweetalert2';
-// import fs from 'fs'
-// import calibration from '../assets/img/calibration.png'
+import Homepage from './Web/Homepage';
 
-
-export default function Kalibrasi( ) {
+export default function Taks_5( ) {
 
   const [data, setData] = useState([])
   const [koordinat, setKoordinat] = useState([])
-  const [status, setStatus] = useState(false)
+  const [status, setStatus] = useState("false")
   
   const canvasRef = useRef(null)
+  const webgazerContainerRef = useRef(null);
 
 
-  useEffect(() => {
-      canvasRef.current.height = window.innerHeight;
-      canvasRef.current.width = window.innerWidth;
 
-    // const body = document.querySelector('body');
+  // useEffect(() => {
+  //     canvasRef.current.height = document.documentElement.scrollHeight - window.innerHeight;
+  //     canvasRef.current.width = window.innerWidth;
+  //     canvasRef.current.height = window.innerHeight;
+
+  //   // const body = document.querySelector('body');
     
-    // canvasRef.current.heig
+  //   // canvasRef.current.heig
  
-    // console.log(window)
-    // console.log(canvasRef.current.height)
-  },[])
+  //   // console.log(window)
+  //   // console.log(canvasRef.current.height)
+  // },[])
 
   
-  useEffect(()=>{
-    window.addEventListener( 'resize', () => {
-      canvasRef.current.height = window.innerHeight;
-      canvasRef.current.width = window.innerWidth;
-    })
-    // const body = document.querySelector('body');
-    
-    // canvasRef.current.heig
- 
-    // console.log(window)
-    // console.log(canvasRef.current.height)
+  useEffect(() => {
+    const setWebgazerContainerHeight = () => {
+      // Set container height for Webgazer
+      webgazerContainerRef.current.style.height = `${document.documentElement.scrollHeight}px`;
+      console.log(webgazerContainerRef.current.style.height)
+    };
 
-  },[])
+    setWebgazerContainerHeight();
 
+    // Add event listener to update the container height when the window is resized
+    window.addEventListener('resize', setWebgazerContainerHeight);
+
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      window.removeEventListener('resize', setWebgazerContainerHeight);
+    };
+  }, []);
+
+   useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    canvas.height = document.documentElement.scrollHeight;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    context.fillStyle = 'green';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }, []);
 
   useEffect(() => {
-    // console.log("x")
-    const canvas = canvasRef.current
-    const context = canvas.getContext('2d')
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    //Our first draw
-    context.fillStyle = ('green')
-    context.fillRect(0, 0, canvas.width, canvas.height)
-  },[])
+    // Menambahkan event listener untuk mendengarkan tombol yang ditekan
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Membersihkan event listener saat komponen tidak lagi digunakan
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'e') {
+      exportData();
+    } else if (event.key === 'r') {
+      Restart();
+    } else if (event.key === 's') {
+      startWebgazer();
+    }
+  };
 
   // //====================================================== Kalibrasi File
     var PointCalibrate = 0;
@@ -165,6 +189,7 @@ export default function Kalibrasi( ) {
                               if (isConfirm){
                                 //clear the calibration & hide the last middle button
                                 ClearCanvas();
+                                obj = []
                               } else {
                                 //use restart function to restart the calibration
                                 document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
@@ -285,46 +310,35 @@ export default function Kalibrasi( ) {
     }
 
     // =============================== file main (memunculkan webgazer) =============================
-    var obj = []
 
     useEffect(() => {
       // console.log(koordinat)
     },[koordinat])
 
+    var obj = []
+    
     const exportData = () => {
       const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-        JSON.stringify(data)
+        JSON.stringify(obj)
       )}`;
       const link = document.createElement("a");
       link.href = jsonString;
-      link.download = "data.json";
+      link.download = "Taks5.json";
   
       link.click();
       Pause()
     };
 
-    const headmap = () => {
-      
+    const berubah = () =>{
+      console.log(obj)
     }
 
-    // const mulaiRekam = () => {
-    //   let time = 1000
-    //   for ( let i = 1; i <= 10; i++) {
-    //     console.log(koordinat)
-    //     setTimeout(() => {
-    //       // obj.push(koordinat)
-    //       // console.log(obj, i)
-    //     },i * time)
-    //   }
-    //   console.log(koordinat)
-    // }
-    // console.log(status)
 
-    window.onload = async function() {
+
+    const startWebgazer = () =>{
 
       //start the webgazer tracker
-      await webgazer.setRegression('ridge') /* currently must set regression and tracker */
-          //.setTracker('clmtrackr')
+      webgazer.setRegression('ridge') /* currently must set regression and tracker */
           .setGazeListener(function(data, elapsedTime) {
               if (data == null) {
                   return;
@@ -332,23 +346,16 @@ export default function Kalibrasi( ) {
               var xprediction = data.x; //these x coordinates are relative to the viewport
               var yprediction = data.y; //these y coordinates are relative to the viewport
 
+              var ypredictionRelative = yprediction + window.pageYOffset;
+
               var obj_data = {
                 x: xprediction,
-                y: yprediction
+                y: ypredictionRelative
               }
 
-              setTimeout( () => {
-                obj.push( obj_data );
-              },30000)
-
+              obj.push(obj_data)
               console.log(obj)
-              setData( obj)
-
-              // setKoordinat(obj_data)
-              // mulaiRekam(xprediction,yprediction)
-              // obj.push(obj_data)
-              // console.log(obj)
-              
+ 
             })
 
           .saveDataAcrossSessions(true)
@@ -357,18 +364,6 @@ export default function Kalibrasi( ) {
           webgazer.showVideoPreview(true) /* shows all video previews */
               .showPredictionPoints(true) /* shows a square every 100 milliseconds where current prediction is */
               .applyKalmanFilter(true); /* Kalman Filter defaults to on. Can be toggled by user. */
-  
-      //Set up the webgazer video feedback.
-      // var setup = function() {
-  
-      //     //Set up the main canvas. The main canvas is used to calibrate the webgazer.
-      //     var canvas = document.getElementById("plotting_canvas");
-      //     canvas.width = window.innerWidth;
-      //     canvas.height = window.innerHeight;
-      //     canvas.style.position = 'fixed';
-      // };
-      // setup();
-  
   };
   
   // Set to true if you want to save the data even if you reload the page.
@@ -399,31 +394,25 @@ export default function Kalibrasi( ) {
 
   return (
 
-      <div>
-        <nav id="webgazerNavbar" className="navbar navbar-default navbar-fixed-top position-absolute ">
-          <div className="container-fluid">
+      <div ref={webgazerContainerRef}>
+        {/* <p>
+                  <a onClick={Restart}  href="#">Recalibrate</a>
+        </p> */}
+        <canvas ref={canvasRef} id="plotting_canvas" style={{cursor:"crosshair", position: "absolute"}}></canvas>
+        <nav id="webgazerNavbar" className="navbar navbar-default  position-absolute  " >
+          <div className="container-fluid " >
 
             <div className="navbar-header">
               {/* <!-- The hamburger menu button --> */}
-              <ul className="nav navbar-nav">
+              <ul className="d-flex "style={{listStyle: "none"}}>
                 {/* <!-- Accuracy --> */}
-                <li id="Accuracy"><a>Not yet Calibrated</a></li>
+                <li>
+                  <button onClick={berubah}>koordinat</button>
+                </li>
                 <li>
                   <a onClick={Restart}  href="#">Recalibrate</a>
                 </li>
-
-                <li>
-                <button type="button" onClick={exportData}>
-                  Export Data
-                </button>
-                </li>
-
-                <li>
-                <button type="button" onClick={headmap}>
-                  headmap
-                </button>
-                </li>
-
+                <li id="Accuracy"><a>Not yet Calibrated</a></li>
 
 
               </ul>
@@ -446,8 +435,10 @@ export default function Kalibrasi( ) {
           </div>
 
         {/* canvas */}
-        <canvas ref={canvasRef} id="plotting_canvas" style={{cursor:"crosshair"}}></canvas>
-
+        {/* <div >
+          <ContohWeb />
+        </div> */}
+        <Homepage exportData = {exportData} />
 </div>
 
   )
